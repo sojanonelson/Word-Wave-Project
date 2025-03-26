@@ -59,6 +59,9 @@ const Room = () => {
       setMessages((prev) => [...prev, messageData]);
     };
 
+    const audio = new Audio(joinedSound);
+    audio.play().catch((err) => console.error("Audio play failed:", err));
+
     socketService.on("new-message", handleNewMessage);
 
     return () => {
