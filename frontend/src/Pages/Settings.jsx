@@ -5,13 +5,14 @@ import {
   LogOut, Settings as SettingsIcon,
   Play
 } from 'lucide-react';
-
+import { useNavigate } from 'react-router-dom';
 import Switch from '../components/general/switch';
 import { getUserById } from '../services/userService';
 import { updateSettings } from '../services/settingService';
 import defaultImage from '../Data/profile.png'
 
 const SettingsPage = () => {
+  const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [selectedSound, setSelectedSound] = useState('sound1');
@@ -25,6 +26,10 @@ const SettingsPage = () => {
     { id: 'sound2', name: 'sound2', url: 'https://res.cloudinary.com/dtmi06vru/video/upload/v1739252589/godceeuxpvngu7q1qrsl.wav' },
 
   ];
+  const handleLogout = () => {
+    localStorage.clear(); // Clears all data from localStorage
+    navigate('/'); // Redirects to the home page
+  };
 
   // Function to play sound preview
   const playSound = (soundUrl) => {
@@ -194,15 +199,15 @@ const SettingsPage = () => {
             Account
           </h3>
           <div>
-            <button className="w-full text-left p-4 hover:bg-gray-100 flex justify-between items-center">
-              <span>Edit Profile</span>
-              <ChevronRight className="text-gray-400" />
-            </button>
+           
             <hr className="border-t border-gray-200" />
-            <button className="w-full text-left p-4 text-red-600 hover:bg-gray-100 flex justify-between items-center">
-              <span>Logout</span>
-              <LogOut className="text-red-600" />
-            </button>
+            <button
+      onClick={handleLogout}
+      className="w-full text-left p-4 text-red-600 hover:bg-gray-100 flex justify-between items-center"
+    >
+      <span>Logout</span>
+      <LogOut className="text-red-600" />
+    </button>
           </div>
         </motion.div>
 
@@ -213,12 +218,7 @@ const SettingsPage = () => {
           transition={{ delay: 0.5 }}
           className="w-3/5 mt-6"
         >
-          <button
-            className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            onClick={handleUpdateSettings}
-          >
-            Save Changes
-          </button>
+        
         </motion.div>
       </div>
     </div>

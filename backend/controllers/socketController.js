@@ -268,11 +268,11 @@ const socketController = (io) => {
           const chatbotResponse = {
             userID: "chatbot",
             name: "Word Wave AI",
-            image: "https://i.ibb.co/LdSxzLLz/image.png", // Chatbot avatar
-            content: `You said: "${message}". ${botresponse}`, // Replace with actual AI response
+            image: "https://miro.medium.com/v2/resize:fit:432/1*JLcpXxiFw_3S0h2QmpXtwA.png", 
+            content: `${botresponse}`, 
             timestamp: new Date(),
-            isChatbot: true, // This is a chatbot message
-            isChatbotMessage: true, // Mark this as a chatbot-related message
+            isChatbot: true, 
+            isChatbotMessage: true, 
           };
       
           // Emit the chatbot's response to the room

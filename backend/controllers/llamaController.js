@@ -4,7 +4,7 @@ const generateResponse = async (req, res) => {
   const { message } = req.body;
 
   try {
-    const response = await axios.post("http://localhost:11434/api/generate", {
+    const response = await axios.post("http://127.0.0.1:11434/api/generate", {
       model: "llama3.2",
       prompt: message,
       stream: false,

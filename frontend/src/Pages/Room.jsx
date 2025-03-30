@@ -10,6 +10,7 @@ import MessageInput from "../components/MessageInput";
 import ChatbotMessageInput from "../components/ChatbotMessageInput";
 import { getRoomDetails } from "../services/roomService";
 import { getllamaResponse } from "../services/chatBotService";
+import { motion } from "framer-motion"
 import joinedSound from "../Data/joined.wav"
 
 
@@ -37,30 +38,15 @@ const Room = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [roomData, setRoomData] = useState([]);
 
-  // console.log("JoinedRoom:", joinedRoom);
 
-
-  const dummyRooms = [
-    { roomCode: "ABC123", roomName: "Fun Chat Room", members: 5 },
-    { roomCode: "XYZ789", roomName: "Study Group", members: 3 },
-    { roomCode: "LMN456", roomName: "Gaming Squad", members: 8 },
-    { roomCode: "QWE987", roomName: "Tech Talk", members: 12 },
-  ];
-
-  // Filter rooms based on search query
-  const filteredRooms = dummyRooms.filter(
-    (room) =>
-      room.roomName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      room.roomCode.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   useEffect(() => {
     const handleNewMessage = (messageData) => {
       setMessages((prev) => [...prev, messageData]);
     };
 
-    const audio = new Audio(joinedSound);
-    audio.play().catch((err) => console.error("Audio play failed:", err));
+    // const audio = new Audio(joinedSound);
+    // audio.play().catch((err) => console.error("Audio play failed:", err));
 
     socketService.on("new-message", handleNewMessage);
 
@@ -349,59 +335,50 @@ const Room = () => {
       )}
 
       <div className="flex-1 flex flex-col">
-        {!joinedRoom && (
-          <div>
-          <h1 className="p-2 text-xl font-bold">Room overview</h1>
+      
+{!joinedRoom && (
+  <div className="flex flex-col h-full bg-white rounded-lg shadow-sm m-4 overflow-hidden">
+    <div className="bg-gradient-to-r from-violet-500 to-purple-600 py-6 px-8">
+      <h1 className="text-2xl font-bold text-white">Room Overview</h1>
+      <p className="text-violet-100 mt-2">Create a new chat room or join an existing one</p>
+    </div>
 
-          <div className="mb- p-2">
-            <input
-              type="text"
-              placeholder="Search rooms..."
-              className="w-3/5 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-600"
-            />
-          </div>
-          <div className="mt-6 flex space-x-2 py-2 mb-4 px-2">
-            <button
-              onClick={() => setIsCreateRoomModalOpen(true)}
-              className="bg-violet-600 text-white px-4 py-2 rounded-lg hover:bg-violet-700"
-            >
-              Create Room
-            </button>
-            <button
-              onClick={() => setIsJoinRoomModalOpen(true)}
-              className="bg-violet-600 text-white px-4 py-2 rounded-lg hover:bg-violet-700"
-            >
-              Join Room
-            </button>
-          </div>
+    <div className="p-8 flex flex-col items-center justify-center flex-1">
+      <motion.div 
+        className="flex flex-col sm:flex-row gap-4 w-full max-w-md"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
+        {/* Create Room Button */}
+        <motion.button
+          onClick={() => setIsCreateRoomModalOpen(true)}
+          className="flex-1 bg-violet-600 text-white py-4 px-6 rounded-xl shadow-md flex items-center justify-center gap-2 text-lg font-medium"
+          whileHover={{ scale: 1.05, boxShadow: "0px 5px 15px rgba(104, 58, 183, 0.3)" }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+          Create Room
+        </motion.button>
 
-          <div className="space-y-4">
-            {filteredRooms.map((room, index) => (
-              <div
-                key={index}
-                className="p-4 bg-gray-50 rounded-lg flex justify-between items-center"
-              >
-                <div>
-                  <h3 className="text-lg font-semibold">{room.roomName}</h3>
-                  <p className="text-sm text-gray-600">Code: {room.roomCode}</p>
-                  <p className="text-sm text-gray-600">
-                    {room.members} members
-                  </p>
-                </div>
-                <button
-                  onClick={() => {
-                    setRoomCode(room.roomCode);
-                    setIsJoinRoomModalOpen(true);
-                  }}
-                  className="bg-violet-600 text-white px-4 py-2 rounded-lg hover:bg-violet-700"
-                >
-                  Join
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-        )}
+        {/* Join Room Button */}
+        <motion.button
+          onClick={() => setIsJoinRoomModalOpen(true)}
+          className="flex-1 bg-white text-violet-600 border-2 border-violet-200 py-4 px-6 rounded-xl shadow-sm flex items-center justify-center gap-2 text-lg font-medium"
+          whileHover={{ scale: 1.05, boxShadow: "0px 5px 15px rgba(149, 114, 252, 0.2)" }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+          </svg>
+          Join Room
+        </motion.button>
+      </motion.div>
+    </div>
+  </div>
+)}
         
 
         <div className="flex-1 p-0 overflow-y-auto">
@@ -437,7 +414,7 @@ const Room = () => {
           <ChatbotMessageInput onSendChatMessage={handleChatBotMessage} />
         )}
 
-        {/* <ChatbotMessageInput onSendChatMessage={handleChatBotMessage} /> */}
+       
 
         {imageToSend && (
           <div className="p-4 bg-white border-t">

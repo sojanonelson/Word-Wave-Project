@@ -105,20 +105,26 @@ const ChatMessages = ({ joinedRoom, MemberMessages, isLoading, setChatMode, upda
             }
 
             return (
-              <div key={index} className={`flex ${isCurrentUser ? "justify-end" : "justify-start"}`}>
-                <div
-                  className={`max-w-[70%] p-3 rounded-lg ${
-                    isCurrentUser
-                      ? "bg-violet-600 text-white"
-                      : message.isChatbot
-                      ? "bg-yellow-200 text-gray-800"
-                      : "bg-gray-200 text-gray-800"
-                  }`}
-                >
-                  {!isCurrentUser && !message.isChatbot && <p className="text-sm font-semibold">{message.name}</p>}
-                  <p>{message.content}</p>
-                </div>
+              <div key={index} className={`flex ${isCurrentUser ? "justify-end" : "justify-start"} items-end gap-2`}>
+              {/* Show chatbot image only */}
+              {message.isChatbot && (
+                <img src={message.image} className="w-10 h-10 rounded-full object-cover" alt="Chatbot" />
+              )}
+            
+              <div
+                className={`max-w-[70%] p-3 rounded-lg ${
+                  isCurrentUser
+                    ? "bg-violet-600 text-white"
+                    : message.isChatbot
+                    ? "bg-yellow-200 text-gray-800"
+                    : "bg-gray-200 text-gray-800"
+                }`}
+              >
+                {!isCurrentUser && !message.isChatbot && <p className="text-sm font-semibold">{message.name}</p>}
+                <p>{message.content}</p>
               </div>
+            </div>
+            
             );
           })}
         </div>

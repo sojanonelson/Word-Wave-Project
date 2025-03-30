@@ -51,11 +51,9 @@ const Home = () => {
       <nav className="w-full px-6 py-4 flex justify-between items-center bg-white/70 backdrop-blur-sm">
         <div className="text-2xl font-bold text-indigo-600 poppins-bold">Word Wave</div>
         <div className="space-x-6">
-          <button className="text-gray-600 hover:text-indigo-600">
-            Features
-          </button>
+          
 
-          <button className="text-gray-600 hover:text-indigo-600">Docs</button>
+         
           {
   isLoggedIn  ? (
     <button className="px-4 py-2 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800">
@@ -113,12 +111,7 @@ const Home = () => {
           />
         </div>
 
-        {/* Stats Section */}
-        <div className="flex justify-center space-x-12 mt-20">
-          <StatBox number="99.9%" label="Accuracy" />
-          <StatBox number="50+" label="Languages" />
-          <StatBox number="1M+" label="Users" />
-        </div>
+        
 
         {/* Contributors Section */}
         <div className="mt-24 mb-20">
@@ -171,7 +164,7 @@ const Home = () => {
           </div>
         </div>
       )}
-      <Footer />
+
     </div>
   );
 };
